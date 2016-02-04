@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hpe.devops.gitmetrics.dto.CommitDto;
 import com.hpe.devops.gitmetrics.dto.RepositoryDto;
 import com.hpe.devops.gitmetrics.service.GitService;
 
@@ -36,5 +37,12 @@ public class GitRestController {
 		System.out.println(clonnedRepo.getRepository());
 		return new RepositoryDto(clonnedRepo.getRepository().getDirectory().getName(), clonnedRepo.getRepository().getConfig().getString("remote","origin","url"));
 	}
+	
+	@ResponseBody
+	public CommitDto getCommits (@RequestBody CommitDto input){
+		Git clonnedRepo = this.gitService.clone(input.getUrl(), BASE_DIR, input.getName());
+		return new CommitDto()
+	}
+	
 
 }

@@ -60,5 +60,27 @@ public class GitService {
 		
 		
 	}
+	private Git getGit(String basePath, String directoryName) {
+		File subdir = new File(getBasedir(basePath, "projects"), directoryName);
+		try (Git git = Git.open(subdir)) {
+			if (git.getRepository().getObjectDatabase().exists()) {
+				return git;
+			} else {
+				throw new IllegalArgumentException("Provided ID is not a repository");
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+			// todo:add error logger
+		}
+	}
+
+	public List<BranchDto> getBranchesList(String basePath, String directoryName) throws GitAPIException {
+		List<Ref> call = this.getGit(basePath, directoryName).branchList().setListMode(ListMode.ALL).call();
+		List<BranchDto> branchList = new ArrayList<BranchDto>();
+		for (Ref ref : call) {
+			branchList.add(new BranchDto(ref.getObjectId().getName(), ref.getName()));
+		}
+		return branchList;
+	}
 
 }
