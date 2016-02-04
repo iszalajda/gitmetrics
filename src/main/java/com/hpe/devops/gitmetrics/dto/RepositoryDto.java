@@ -13,8 +13,7 @@ public class RepositoryDto {
 	@JsonInclude
 	private String url;
 	
-	public RepositoryDto(){
-		
+	public RepositoryDto(){	
 	}
 	
 	public RepositoryDto(String name, String url ){
