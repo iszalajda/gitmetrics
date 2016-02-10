@@ -10,7 +10,7 @@ public class CommitDto {
 	@JsonInclude
 	private String commitId;
 	@JsonInclude
-	private Date commitDate;
+	private String commitDate;
 	@JsonInclude
 	private String commitOwner;
 	@JsonInclude
@@ -20,7 +20,7 @@ public class CommitDto {
 		
 	}
 	
-	public CommitDto(String commitId, Date commitDate, String commitOwner, String commitOwnerEmail){
+	public CommitDto(String commitId, String commitDate, String commitOwner, String commitOwnerEmail){
 		this.commitId=commitId;
 		this.commitDate=commitDate;
 		this.commitOwner=commitOwner;
@@ -34,10 +34,10 @@ public class CommitDto {
 	public void setCommitId(String commitId) {
 		this.commitId = commitId;
 	}
-	public Date getCommitDate() {
+	public String getCommitDate() {
 		return commitDate;
 	}
-	public void setCommitDate(Date commitDate) {
+	public void setCommitDate(String commitDate) {
 		this.commitDate = commitDate;
 	}
 	public String getCommitOwner() {

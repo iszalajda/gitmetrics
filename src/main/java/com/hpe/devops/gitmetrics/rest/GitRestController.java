@@ -1,10 +1,15 @@
 package com.hpe.devops.gitmetrics.rest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.errors.AmbiguousObjectException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,17 +47,19 @@ public class GitRestController {
 		return new RepositoryDto(clonnedRepo.getRepository().getDirectory().getName(), clonnedRepo.getRepository().getConfig().getString("remote","origin","url"));
 	}
 	
-	@ResponseBody
-	public CommitDto getCommits (@RequestBody CommitDto input){
-		Git clonnedRepo = this.gitService.clone(input.getUrl(), BASE_DIR, input.getName());
-		return new CommitDto()
-	}
-	
 
 	@ResponseBody 
 	@RequestMapping(path = "/repositories/{directoryName}/branches", method = RequestMethod.GET)
 	public List <BranchDto> getBranches(@PathVariable String directoryName) throws GitAPIException{
 		return this.gitService.getBranchesList(BASE_DIR, directoryName);
 	}
+	
+	@ResponseBody
+	@RequestMapping(path = "/repositories/{directoryName}/branches/{branchName}/commits", method = RequestMethod.GET)
+	public List <CommitDto> getCommits (@PathVariable String branchName, @PathVariable String directoryName) throws RevisionSyntaxException, MissingObjectException, IncorrectObjectTypeException, AmbiguousObjectException, GitAPIException, IOException{
+		return this.gitService.getCommitList(branchName, BASE_DIR, directoryName);
+	}
+	
+	
 	
 }
