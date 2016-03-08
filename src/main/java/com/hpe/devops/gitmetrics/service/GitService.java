@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -13,8 +14,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand.ListMode;
@@ -25,6 +24,8 @@ import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.hpe.devops.gitmetrics.dto.BranchDto;
@@ -33,7 +34,7 @@ import com.hpe.devops.gitmetrics.dto.CommitDto;
 @Service
 public class GitService {
 	//podpiac loggera
-	Logger logger = Logger.getLogger("logger");
+	private static final Logger logger = LoggerFactory.getLogger(GitService.class);
 	private static final ExecutorService executor = new ThreadPoolExecutor(10, 10, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
 	
 /*o the constructed basePath/directoryName
@@ -74,8 +75,6 @@ public class GitService {
 		} else {
 			throw new IllegalArgumentException(String.format("You don't have permissions to read and write in %s%s", parentPath, projectsBaseDirName));
 		}
-		
-		
 	}
 	private Git getGit(String basePath, String directoryName) {
 		File subdir = new File(getBasedir(basePath, "projects"), directoryName);
@@ -83,11 +82,11 @@ public class GitService {
 			if (git.getRepository().getObjectDatabase().exists()) {
 				return git;
 			} else {
-				logger.log(Level.SEVERE, "not a repository", new IllegalArgumentException("Provided ID is not a repository"));
+				logger.debug("Provided ID is not a repository");
 				throw new IllegalArgumentException("Provided ID is not a repository");
 			}
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, "error", new RuntimeException(e.getMessage()));
+			logger.debug(e.getMessage());
 			throw new RuntimeException(e.getMessage());
 		}
 	}
@@ -106,11 +105,8 @@ public class GitService {
 		List<CommitDto> commitDtoList = new ArrayList<>();
 		Iterable<RevCommit> call = git.log().add(git.getRepository().resolve(branchDtoName)).call();
 		for(RevCommit commit: call){
-			commitDtoList.add(new CommitDto(commit.getId().getName(),new Integer (commit.getCommitTime()).toString(), commit.getCommitterIdent().getName(), commit.getCommitterIdent().getEmailAddress()));
-			 
+			commitDtoList.add(new CommitDto(commit.getId().getName(),new Date (commit.getCommitTime()).toString(), commit.getCommitterIdent().getName(), commit.getCommitterIdent().getEmailAddress()));
 		}
 		return commitDtoList;
-	
 	}
-
 }
