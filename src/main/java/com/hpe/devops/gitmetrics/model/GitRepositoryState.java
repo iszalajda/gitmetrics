@@ -33,7 +33,7 @@ public class GitRepositoryState {
         this.branch = String.valueOf(properties.get("git.branch"));
         this.dirty = String.valueOf(properties.get("git.dirty"));
         this.remoteOriginUrl = String.valueOf(properties.get("git.remote.origin.url"));
-        this.commitId = String.valueOf(properties.get("git.commit.id.full")); // OR properties.get("git.commit.id") depending on your configuration
+        this.commitId = String.valueOf(properties.get("git.commit.id")); // OR properties.get("git.commit.id.full") depending on your configuration
         this.commitIdAbbrev = String.valueOf(properties.get("git.commit.id.abbrev"));
         this.describe = String.valueOf(properties.get("git.commit.id.describe"));
         this.describeShort = String.valueOf(properties.get("git.commit.id.describe-short"));
