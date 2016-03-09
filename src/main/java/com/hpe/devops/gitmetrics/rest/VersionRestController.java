@@ -20,7 +20,7 @@ public class VersionRestController {
 
     @ResponseBody
     @RequestMapping("/version")
-    public VersionDto getVersion() throws IOException, URISyntaxException{
+    public VersionDto getVersion() throws IOException{
         Properties gitProperties = new Properties();
         gitProperties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
         GitRepositoryState repositoryState = new GitRepositoryState(gitProperties);
@@ -28,13 +28,9 @@ public class VersionRestController {
         Properties applicationProperties = new Properties();
         applicationProperties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
 
-        Date compilationDate = new Date(new File(getClass().getClassLoader().getResource(getClass().getCanonicalName().replace('.', '/') + ".class").toURI()).lastModified());
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-
         VersionDto versionDto = new VersionDto();
 
-        versionDto.setCompilationDate(formatter.format(compilationDate));
+        versionDto.setCompilationDate(repositoryState.getBuildTime());
         versionDto.setCommitId(repositoryState.getCommitId());
         versionDto.setCommiter(repositoryState.getCommitUserEmail());
         versionDto.setGitBranch(repositoryState.getBranch());

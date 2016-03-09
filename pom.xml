@@ -95,7 +95,6 @@
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
 					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
 					<format>properties</format>
-					<abbrevLength>40</abbrevLength>
 					<commitIdGenerationMode>flat</commitIdGenerationMode>
 				</configuration>
 			</plugin>

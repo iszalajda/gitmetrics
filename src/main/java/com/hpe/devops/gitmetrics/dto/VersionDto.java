@@ -15,7 +15,7 @@ public class VersionDto {
     @JsonProperty("compilationDate")
     private String compilationDate;
 
-    @JsonProperty
+    @JsonProperty("commiter")
     private String commiter;
 
     public String getCommiter() {
