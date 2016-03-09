@@ -1,2 +1,2 @@
-# threadpoolexecutorexample
-Contains information about http://blog.szulawski.ninja/threadpoolexecutor-and-java-8/
+# GitMetrics
+Grabs and gathers some basic metrics about git repositories
