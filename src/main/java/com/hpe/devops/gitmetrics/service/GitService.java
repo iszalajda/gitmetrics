@@ -94,7 +94,7 @@ public class GitService {
 		List<CommitDto> commitDtoList = new ArrayList<>();
 		Iterable<RevCommit> call = git.log().add(git.getRepository().resolve(branchDtoName)).call();
 		for(RevCommit commit: call){
-			commitDtoList.add(new CommitDto(commit.getId().getName(),new Date (commit.getCommitTime()).toString(), commit.getCommitterIdent().getName(), commit.getCommitterIdent().getEmailAddress()));
+			commitDtoList.add(new CommitDto(commit.getId().getName(),new Date (commit.getCommitTime()).toString(), commit.getCommitterIdent().getName(), commit.getCommitterIdent().getEmailAddress(), commit.getFullMessage()));
 		}
 		return commitDtoList;
 	}

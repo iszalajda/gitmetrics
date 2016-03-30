@@ -15,16 +15,19 @@ public class CommitDto {
 	private String commitOwner;
 	@JsonInclude
 	private String commitOwnerEmail;
+	@JsonInclude
+	private String commitMessage;
 	
 	public CommitDto (){
 		
 	}
 	
-	public CommitDto(String commitId, String commitDate, String commitOwner, String commitOwnerEmail){
+	public CommitDto(String commitId, String commitDate, String commitOwner, String commitOwnerEmail, String commitMessage){
 		this.commitId=commitId;
 		this.commitDate=commitDate;
 		this.commitOwner=commitOwner;
 		this.commitOwnerEmail=commitOwnerEmail;
+		this.commitMessage=commitMessage;
 	}
 	
 	
@@ -52,5 +55,7 @@ public class CommitDto {
 	public void setCommitOwnerEmail(String commitOwnerEmail) {
 		this.commitOwnerEmail = commitOwnerEmail;
 	}
+	public String getCommitMessage() {return commitMessage;}
+	public void setCommitMessage(String commitMessage) {this.commitMessage = commitMessage; }
 
 }
