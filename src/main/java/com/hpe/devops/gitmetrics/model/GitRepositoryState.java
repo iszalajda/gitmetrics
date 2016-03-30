@@ -1,6 +1,5 @@
 package com.hpe.devops.gitmetrics.model;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public class GitRepositoryState {

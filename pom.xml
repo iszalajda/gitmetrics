@@ -9,7 +9,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.1.RELEASE</version>
+		<version>1.2.7.RELEASE</version>
+		<relativePath/>
 	</parent>
 
 	<properties>
@@ -21,9 +22,17 @@
 		<git.commit.id.version>2.2.0</git.commit.id.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<build.version>${project.build.finalName}</build.version>
+
+		<start-class>com.hpe.devops.gitmetrics.GitMetricsApplication</start-class>
+		<main.basedir>${basedir}/../..</main.basedir>
+		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -35,12 +44,9 @@
 			<artifactId>org.eclipse.jgit</artifactId>
 			<version>${jgit.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 
-		<dependency>
+
+		<!--dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
@@ -60,14 +66,21 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
-		</dependency>
+		</dependency-->
 
 		<dependency>
-			<groupId>pl.project13.maven</groupId>
-			<artifactId>git-commit-id-plugin</artifactId>
-			<version>${git.commit.id.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
