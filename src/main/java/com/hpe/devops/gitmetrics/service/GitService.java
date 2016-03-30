@@ -59,16 +59,11 @@ public class GitService {
 	 */
 	private File getBasedir(String parentPath, String projectsBaseDirName){
 		Path basepath = Paths.get(parentPath, projectsBaseDirName);
-		Path parent = basepath.getParent();
-		if(Files.isReadable(parent) && Files.isWritable(parent)){
-			File baseDir = basepath.toFile();
+		File baseDir = basepath.toFile();
 			if(!baseDir.exists()){
 				baseDir.mkdirs();
 			}
-			return baseDir;
-		} else {
-			throw new IllegalArgumentException(String.format("You don't have permissions to read and write in %s%s", parentPath, projectsBaseDirName));
-		}
+		return baseDir;
 	}
 	private Git getGit(String basePath, String directoryName) {
 		File subdir = new File(getBasedir(basePath, "projects"), directoryName);
